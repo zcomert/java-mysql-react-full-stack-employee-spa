@@ -1,0 +1,9 @@
+p{
+    padding: 10px;
+    border:1px solid #a1a1a1;
+    border-color: #eaeaea;
+}
+p:hover{
+    cursor: pointer;
+    background-color: antiquewhite;
+}
