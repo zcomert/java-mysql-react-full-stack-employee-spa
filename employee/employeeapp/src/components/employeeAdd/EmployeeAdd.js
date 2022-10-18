@@ -1,25 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AppContext from "../../context/AppContext";
 
-function EmployeeAdd({ employees, setList }) {
+function EmployeeAdd() {
+  const { employees, setList } = useContext(AppContext);
 
-    const [values,setValues] = useState({
-        firstName:'',
-        lastName:''
-    }) 
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
+  });
 
-    const handleChange = (e) => {
-        setValues({
-            ...values,
-            [e.target.name] : e.target.value
-        })
-    }
+  const handleChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-    const handleClear = () => {
-        setValues({
-            firstName:'',
-            lastName:'',
-        })
-    }
+  const handleClear = () => {
+    setValues({
+      firstName: "",
+      lastName: "",
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,14 +30,14 @@ function EmployeeAdd({ employees, setList }) {
       ...employees,
       {
         id: employees.length + 1,
-        ...values
+        ...values,
       },
     ]);
 
     setValues({
-        firstName:'',
-        lastName:''
-    })
+      firstName: "",
+      lastName: "",
+    });
   };
 
   return (
@@ -49,7 +51,7 @@ function EmployeeAdd({ employees, setList }) {
             placeholder='First Name'
             type='text'
             onChange={handleChange}
-            value = {values?.firstName}
+            value={values?.firstName}
           />
         </p>
         <p>
@@ -59,11 +61,13 @@ function EmployeeAdd({ employees, setList }) {
             placeholder='Last Name'
             type='text'
             onChange={handleChange}
-            value = {values?.lastName}
+            value={values?.lastName}
           />
         </p>
         <button type='submit'>Save</button>
-        <button onClick = {handleClear} type="button">Clear</button>
+        <button onClick={handleClear} type='button'>
+          Clear
+        </button>
       </form>
     </>
   );

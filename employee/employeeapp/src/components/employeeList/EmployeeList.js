@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import AppContext from "../../context/AppContext";
 import Employee from "../employee/Employee";
 
-function EmployeeList({ employees, setList, setSelectedEmployee }) {
+function EmployeeList() {
+  const { employees, setList, setSelectedEmployee } = useContext(AppContext);
+  
   const handleClearAll = () => {
     setList([]);
   };
