@@ -15,10 +15,11 @@ function App() {
   return (
     <div>
       <h1>Employees App </h1>
-      <EmployeeList 
-       setSelectedEmployee={setSelectedEmployee}
-      employees={list} 
-      setList={setList} />
+      <EmployeeList
+        setSelectedEmployee={setSelectedEmployee}
+        employees={list}
+        setList={setList}
+      />
       <EmployeeAdd employees={list} setList={setList} />
       <EmployeeUpdate
         employees={list}
