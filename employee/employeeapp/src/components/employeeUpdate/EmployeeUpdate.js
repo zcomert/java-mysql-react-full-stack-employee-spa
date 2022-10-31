@@ -1,29 +1,32 @@
 import React, { useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import AppContext from "../../context/AppContext";
 
 export default function EmployeeUpdate() {
 
-  const {
-    employees,
-    setList,
-    selectedEmployee,
-    setSelectedEmployee,
-  } = useContext(AppContext);
+  const navigate = useNavigate();
   
+  const {id} = useParams();
+  console.log(id)
+  
+  const { employees, setList, selectedEmployee, setSelectedEmployee } =
+    useContext(AppContext);
+
   const handleChange = (e) => {
     setSelectedEmployee({
-        ...selectedEmployee,
-        [e.target.name] : e.target.value
-    })
-  }
+      ...selectedEmployee,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setList([
-        ...employees.filter(emp => emp.id !== selectedEmployee.id),
-        selectedEmployee
-    ])
-  }
+      ...employees.filter((emp) => emp.id !== selectedEmployee.id),
+      selectedEmployee,
+    ]);
+    navigate("/employees");
+  };
 
   return (
     <div>
@@ -47,7 +50,7 @@ export default function EmployeeUpdate() {
           placeholder='Last Name'
         />
 
-        <button type="submit" >Update</button>
+        <button type='submit'>Update</button>
       </form>
     </div>
   );
