@@ -1,5 +1,8 @@
 package com.employee.employee.presentation;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,20 +14,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.employee.entities.Employee;
-import com.employee.employee.services.EmployeeService;
+import com.employee.employee.services.Contracts.EmployeeService;
 
 @RestController
 @RequestMapping("api/employees")
 @CrossOrigin
 public class EmployeesController {
+
     private final EmployeeService employeeService;
 
-    public EmployeesController(EmployeeService employeeService) {
+    public EmployeesController(@Qualifier("mysql") EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping
-    public Iterable<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
@@ -37,17 +41,5 @@ public class EmployeesController {
     @PostMapping
     public Employee createOnEmployee(@RequestBody Employee employee) {
         return employeeService.createOneEmployee(employee);
-    }
-
-    @PutMapping(path = "{id}")
-    public Employee updateOneEmployee(@PathVariable(name = "id") int id,
-            @RequestBody Employee employee) {
-        var emp = employeeService.updateOneEmployee(id, employee);
-        return emp;
-    }
-
-    @DeleteMapping(path = "{id}")
-    public void deleteOneEmployee(@PathVariable(name = "id") int id) {
-        employeeService.deleteOneEmployeeById(id);
     }
 }
