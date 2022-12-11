@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.employee.employee.entities.Employee;
+import com.employee.employee.entities.exceptions.EmployeeNotFoundException;
 import com.employee.employee.repositories.EmployeeRepository;
 import com.employee.employee.services.Contracts.EmployeeService;
 
@@ -27,7 +28,9 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public Employee getOneEmployeeById(int id) {
-        return employeeRepository.findById(id).orElse(null);
+        return employeeRepository
+                .findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
     @Override
