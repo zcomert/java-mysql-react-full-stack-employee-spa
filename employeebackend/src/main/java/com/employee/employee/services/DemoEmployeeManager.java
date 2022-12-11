@@ -34,4 +34,16 @@ public class DemoEmployeeManager implements EmployeeService {
         return new Employee(1, "Ahmet", "Can", 1000);
     }
 
+    @Override
+    public Employee updateOneEmployee(int id, Employee employee) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void deleteOneEmployee(int id) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

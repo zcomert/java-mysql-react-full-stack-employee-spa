@@ -10,7 +10,6 @@ import com.employee.employee.entities.Employee;
 import com.employee.employee.repositories.EmployeeRepository;
 import com.employee.employee.services.Contracts.EmployeeService;
 
-
 @Service
 @Repository("mysql")
 public class EmployeeManager implements EmployeeService {
@@ -34,6 +33,27 @@ public class EmployeeManager implements EmployeeService {
     @Override
     public Employee createOneEmployee(Employee employee) {
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public Employee updateOneEmployee(int id, Employee employee) {
+
+        if (employee.getId() != id)
+            throw new RuntimeException("Please check the employee id!");
+
+        var entity = getOneEmployeeById(id);
+
+        // Mapper
+        entity.setFirstName(employee.getFirstName());
+        entity.setLastName(employee.getLastName());
+        entity.setSalary(employee.getSalary());
+
+        return employeeRepository.save(entity);
+    }
+
+    @Override
+    public void deleteOneEmployee(int id) {
+        employeeRepository.deleteById(id);
     }
 
 }

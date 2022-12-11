@@ -3,6 +3,8 @@ package com.employee.employee.presentation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.employee.entities.Employee;
@@ -28,18 +32,38 @@ public class EmployeesController {
     }
 
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public ResponseEntity<?> getAllEmployees() {
+        var employees = employeeService.getAllEmployees();
+        return new ResponseEntity<>(employees, HttpStatus.OK); // OK : 200
     }
 
     // employees/2
     @GetMapping(path = "{id}")
-    public Employee getOneEmployee(@PathVariable(name = "id") int id) {
-        return employeeService.getOneEmployeeById(id);
+    public ResponseEntity<Employee> getOneEmployee(@PathVariable(name = "id") int id) {
+        var employee = employeeService.getOneEmployeeById(id);
+        return ResponseEntity.ok(employee); // 200
     }
 
     @PostMapping
-    public Employee createOnEmployee(@RequestBody Employee employee) {
-        return employeeService.createOneEmployee(employee);
+    public ResponseEntity<?> createOneEmployee(@RequestBody Employee employee) {
+        employeeService.createOneEmployee(employee);
+        return new ResponseEntity<>(employee, HttpStatus.CREATED); // 201
+    }
+
+    @PutMapping(path = "{id}")
+    public ResponseEntity<?> updateOneEmployee(@PathVariable(name = "id", required = true) int id,
+            @RequestBody Employee employee) {
+        employeeService.updateOneEmployee(id, employee); // client -> server
+        return ResponseEntity.ok()
+                .header("location", "http://localhost:8082/api/employees/" + employee.getId())
+                .body(employee);
+    }
+
+    @DeleteMapping(path="{id}")
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> deleteOneEmployee(@PathVariable(name="id", required = true) int id){
+        employeeService.deleteOneEmployee(id);
+        return ResponseEntity.noContent().build();
     }
 }
