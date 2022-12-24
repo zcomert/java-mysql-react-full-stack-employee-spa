@@ -9,7 +9,7 @@ export default function EmployeeUpdate() {
   const {id} = useParams();
   console.log(id)
   
-  const { employees, setList, selectedEmployee, setSelectedEmployee } =
+  const { selectedEmployee, setSelectedEmployee, putOneEmployee } =
     useContext(AppContext);
 
   const handleChange = (e) => {
@@ -21,10 +21,7 @@ export default function EmployeeUpdate() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setList([
-      ...employees.filter((emp) => emp.id !== selectedEmployee.id),
-      selectedEmployee,
-    ]);
+    putOneEmployee(selectedEmployee.id, selectedEmployee);
     navigate("/employees");
   };
 

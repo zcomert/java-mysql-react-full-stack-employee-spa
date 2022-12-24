@@ -3,14 +3,14 @@ import AppContext from "../../context/AppContext";
 import Employee from "../employee/Employee";
 
 function EmployeeList() {
-  const { employees, setList, setSelectedEmployee } = useContext(AppContext);
+  const { employees, setList, setSelectedEmployee, deleteOneEmployee } = useContext(AppContext);
   
   const handleClearAll = () => {
     setList([]);
   };
 
   const handleRemove = (id) => {
-    setList(employees.filter((emp) => emp.id !== id));
+    deleteOneEmployee(id);
   };
 
   return (

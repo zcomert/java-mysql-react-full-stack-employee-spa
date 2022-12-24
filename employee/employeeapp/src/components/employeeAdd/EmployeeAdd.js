@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import AppContext from "../../context/AppContext";
 
 function EmployeeAdd() {
-  const { employees, setList } = useContext(AppContext);
+  const { postOneEmployee } = useContext(AppContext);
 
   const [values, setValues] = useState({
     firstName: "",
@@ -26,13 +26,7 @@ function EmployeeAdd() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setList([
-      ...employees,
-      {
-        id: employees.length + 1,
-        ...values,
-      },
-    ]);
+    postOneEmployee({ ...values, salary: 10 });
 
     setValues({
       firstName: "",
