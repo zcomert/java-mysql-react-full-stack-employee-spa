@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AppContext from "../../context/AppContext";
+import { Button, Container, TextField, Typography } from "@mui/material";
+import SimpleFab from "../ui/fab/SimpleFab";
+import { Stack } from "@mui/system";
 
 export default function EmployeeUpdate() {
-
   const navigate = useNavigate();
-  
-  const {id} = useParams();
-  console.log(id)
-  
+
+  const { id } = useParams();
+  console.log(id);
+
   const { selectedEmployee, setSelectedEmployee, putOneEmployee } =
     useContext(AppContext);
 
@@ -26,29 +28,58 @@ export default function EmployeeUpdate() {
   };
 
   return (
-    <div>
-      <h3>Employee Update</h3>
-      <p>{JSON.stringify(selectedEmployee)}</p>
-      <form onSubmit={handleSubmit}>
-        <input
-          id='firstName'
-          name='firstName'
-          onChange={handleChange}
-          value={selectedEmployee?.firstName}
-          type='text'
-          placeholder='First Name'
-        />
-        <input
-          id='lastName'
-          name='lastName'
-          onChange={handleChange}
-          value={selectedEmployee?.lastName}
-          type='text'
-          placeholder='Last Name'
-        />
+    <Container>
+      <Typography
+        align="center"
+        variant="h3"
+        component="h3"
+        gutterBottom
+        color="primary"
+      >
+        Update Employee
+      </Typography>
 
-        <button type='submit'>Update</button>
+      <form onSubmit={handleSubmit}>
+        <Stack spacing={3} >
+          <TextField
+            label="First Name"
+            id="firstName"
+            name="firstName"
+            onChange={handleChange}
+            value={selectedEmployee?.firstName}
+            type="text"
+            placeholder="First Name"
+          />
+          
+          <TextField
+            label="Last Name"
+            id="lastName"
+            name="lastName"
+            onChange={handleChange}
+            value={selectedEmployee?.lastName}
+            type="text"
+            placeholder="Last Name"
+          />
+
+          <TextField
+            label="Salary"
+            id="salary"
+            name="salary"
+            onChange={handleChange}
+            value={selectedEmployee?.salary}
+            type="text"
+            placeholder="Salary"
+          />
+
+          <Button variant="contained" type="submit">Update</Button>
+        </Stack>
       </form>
-    </div>
+      <SimpleFab
+        fab={{
+          url: "/employees",
+          icon: "list",
+        }}
+      />
+    </Container>
   );
 }
