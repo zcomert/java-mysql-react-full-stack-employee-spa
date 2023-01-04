@@ -5,7 +5,7 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [employees, setList] = useState([]);
-  const [theme, setTheme] = useState('theme3');
+  const [theme, setTheme] = useState('theme2');
 
   useEffect(() => {
     getAllEmployees();
