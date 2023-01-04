@@ -5,6 +5,7 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [employees, setList] = useState([]);
+  const [theme, setTheme] = useState('theme3');
 
   useEffect(() => {
     getAllEmployees();
@@ -50,7 +51,9 @@ export const AppProvider = ({ children }) => {
     setSelectedEmployee,
     postOneEmployee,
     putOneEmployee,
-    deleteOneEmployee
+    deleteOneEmployee,
+    theme,
+    setTheme
   };
 
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
