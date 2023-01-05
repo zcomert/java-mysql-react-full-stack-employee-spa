@@ -23,7 +23,6 @@ function EmployeeAdd() {
       salary: 0,
     },
     onSubmit: (values) => {
-      console.log(values);
       postOneEmployee(values);
       handleClear();
     },

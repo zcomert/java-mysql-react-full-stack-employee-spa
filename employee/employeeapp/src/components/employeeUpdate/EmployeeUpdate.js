@@ -4,28 +4,32 @@ import AppContext from "../../context/AppContext";
 import { Button, Container, TextField, Typography } from "@mui/material";
 import SimpleFab from "../ui/fab/SimpleFab";
 import { Stack } from "@mui/system";
+import { useFormik } from "formik";
+import { updateValidationSchema } from "./updateValidationSchema";
 
 export default function EmployeeUpdate() {
-  const navigate = useNavigate();
-
-  const { id } = useParams();
-  console.log(id);
-
   const { selectedEmployee, setSelectedEmployee, putOneEmployee } =
     useContext(AppContext);
 
-  const handleChange = (e) => {
-    setSelectedEmployee({
-      ...selectedEmployee,
-      [e.target.name]: e.target.value,
+  const { handleSubmit, handleChange, handleBlur, touched, values, errors } =
+    useFormik({
+      initialValues: {
+        firstName: selectedEmployee?.firstName,
+        lastName: selectedEmployee?.lastName,
+        salary: selectedEmployee?.salary,
+      },
+      onSubmit: (values) => {
+        putOneEmployee(selectedEmployee.id, {
+          id: selectedEmployee.id,
+          ...values,
+        });
+        navigate("/employees");
+      },
+      validationSchema: updateValidationSchema,
     });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    putOneEmployee(selectedEmployee.id, selectedEmployee);
-    navigate("/employees");
-  };
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   return (
     <Container>
@@ -40,25 +44,31 @@ export default function EmployeeUpdate() {
       </Typography>
 
       <form onSubmit={handleSubmit}>
-        <Stack spacing={3} >
+        <Stack spacing={3}>
           <TextField
             label="First Name"
             id="firstName"
             name="firstName"
             onChange={handleChange}
-            value={selectedEmployee?.firstName}
+            onBlur = {handleBlur}
+            value={values?.firstName}
             type="text"
             placeholder="First Name"
+            helperText = {errors?.firstName && touched?.firstName ? errors?.firstName : " "}
+            error = {errors?.firstName && touched?.firstName }
           />
-          
+
           <TextField
             label="Last Name"
             id="lastName"
             name="lastName"
             onChange={handleChange}
-            value={selectedEmployee?.lastName}
+            onBlur = {handleBlur}
+            value={values?.lastName}
             type="text"
             placeholder="Last Name"
+            helperText = {errors?.lastName && touched?.lastName ? errors?.lastName : " "}
+            error = {errors?.lastName && touched?.lastName }
           />
 
           <TextField
@@ -66,12 +76,17 @@ export default function EmployeeUpdate() {
             id="salary"
             name="salary"
             onChange={handleChange}
-            value={selectedEmployee?.salary}
+            onBlur = {handleBlur}
+            value={values?.salary}
             type="text"
             placeholder="Salary"
+            helperText = {errors?.salary && touched?.salary ? errors?.salary : " "}
+            error = {errors?.salary && touched?.salary }
           />
 
-          <Button variant="contained" type="submit">Update</Button>
+          <Button variant="contained" type="submit">
+            Update
+          </Button>
         </Stack>
       </form>
       <SimpleFab
