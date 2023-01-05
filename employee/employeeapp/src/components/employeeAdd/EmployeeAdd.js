@@ -3,40 +3,38 @@ import AppContext from "../../context/AppContext";
 import SimpleFab from "../ui/fab/SimpleFab";
 import { Button, Container, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { useFormik } from "formik";
+import { addValidationSchema } from "./addValidationSchema";
 
 function EmployeeAdd() {
   const { postOneEmployee } = useContext(AppContext);
-
-  const [values, setValues] = useState({
-    firstName: "",
-    lastName: "",
-    salary:0
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    setValues,
+    errors,
+    handleBlur,
+    touched,
+  } = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      salary: 0,
+    },
+    onSubmit: (values) => {
+      console.log(values);
+      postOneEmployee(values);
+      handleClear();
+    },
+    validationSchema : addValidationSchema
   });
-
-  const handleChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleClear = () => {
     setValues({
       firstName: "",
       lastName: "",
-      salary:0
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    postOneEmployee({ ...values, salary: 10 });
-
-    setValues({
-      firstName: "",
-      lastName: "",
-      salary:0
+      salary: 0,
     });
   };
 
@@ -54,13 +52,16 @@ function EmployeeAdd() {
       <form onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
-          label="First Name"
+            label="First Name"
             id="firstName"
             name="firstName"
             placeholder="First Name"
             type="text"
             onChange={handleChange}
+            onBlur={handleBlur}
             value={values?.firstName}
+            helperText={errors?.firstName && touched?.firstName ? errors?.firstName : ""}
+            error = {errors?.firstName && touched?.firstName}
           />
 
           <TextField
@@ -70,7 +71,10 @@ function EmployeeAdd() {
             placeholder="Last Name"
             type="text"
             onChange={handleChange}
+            onBlur={handleBlur}
             value={values?.lastName}
+            helperText={errors?.lastName && touched?.lastName ? errors?.lastName : ""}
+            error = {errors?.lastName && touched?.lastName}
           />
 
           <TextField
@@ -80,10 +84,18 @@ function EmployeeAdd() {
             placeholder="Salary"
             type="text"
             onChange={handleChange}
-            value={values?.lastName}
+            onBlur={handleBlur}
+            value={values?.salary}
+            helperText={errors?.salary && touched?.salary ? errors?.salary : ""}
+            error = {errors?.salary && touched?.salary}
           />
 
-          <Stack direction="row" spacing={2} alignItems="center" justifyContent="center"  >
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+          >
             <Button variant="contained" type="submit">
               Save
             </Button>
