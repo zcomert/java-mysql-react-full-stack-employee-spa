@@ -2,6 +2,8 @@ package com.employee.employee.presentation;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,14 +51,14 @@ public class EmployeesController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createOneEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<?> createOneEmployee(@Valid @RequestBody Employee employee) {
         employeeService.createOneEmployee(employee);
         return new ResponseEntity<>(employee, HttpStatus.CREATED); // 201
     }
 
     @PutMapping(path = "{id}")
     public ResponseEntity<?> updateOneEmployee(@PathVariable(name = "id", required = true) int id,
-            @RequestBody Employee employee) {
+            @Valid @RequestBody Employee employee) {
         employeeService.updateOneEmployee(id, employee); // client -> server
         return ResponseEntity.ok()
                 .header("location", "http://localhost:8082/api/employees/" + employee.getId())
