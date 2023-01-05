@@ -15,8 +15,8 @@ Bu amaçla yazdığımız tüm kodları bu repository altında topluyoruz.
 6. Context API
 7. Routing
 8. Spring Boot
-9. Katmanlama (Layering)
-10. Soyutlama (Abstraction)
+9. Layering
+10. Abstraction
 11. Rest API
     - Response Entity
     - Exception Handler
@@ -24,6 +24,8 @@ Bu amaçla yazdığımız tüm kodları bu repository altında topluyoruz.
 12. Handling Errors
 13. Fetch
 14. Materail UI
+15. Theming
+16. Validation
 
 
 ## Youtube Oynama Listesi
@@ -34,3 +36,4 @@ Virtual Campus Youtube Kanalı <br/>
 1. [Virtual Campus](https://www.youtube.com/watch?v=zIFj-zI5DWc&list=PLK37qYAhi0EepiwH6amD-47IWIec3ozBx)
 2. [ResponseEntity](https://www.baeldung.com/spring-response-entity)
 3. [ExceptionHandler](https://www.baeldung.com/exception-handling-for-rest-with-spring)
+4. [Validation](https://www.baeldung.com/spring-boot-bean-validation)
